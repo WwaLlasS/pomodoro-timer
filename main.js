@@ -32,7 +32,7 @@ app.on('ready', () => {
 
   //Create tray Menu
 
-  tray = new Tray('./resources/pomodoro-counter-empty.png')
+  tray = new Tray(path.join(__dirname, 'resources/pomodoro-counter-empty.png'))
   const contextMenu = Menu.buildFromTemplate([
     {label:'Iniciar pomodoro'},
     {label:'separador', type:'separator'},
