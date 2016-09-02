@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="resources/css/normalize.css">
+  <link rel="stylesheet" href="resources/css/framework.css">
+  <link rel="stylesheet" href="resources/css/style.css">
+</head>
+<body>
+  <main class="container">
+    <h1 id="title">Pomodoro Indicator</h1>
+    <section class="frame">
+      <div class="row center text-big">
+        <span id="minutos">00</span>:<span id="segundos">00</span>
+      </div>
+      <div class="row center">
+        <label title="Max '30min'" for="tiempo">Minutos:</label>
+        <input id="tiempo" type="number" min="1" max="30" value="25">
+      </div>
+      <div class="row">
+        <button class="button-green" id="start" type="button" name="button">Iniciar</button>
+        <button class="button-red" id="stop" type="button" name="button">detener</button>
+      </div>
+      <div class="row center">
+        <button id="short" class="button-green" type="button" name="button">Descanso breve</button>
+        <button id="long" class="button-green" type="button" name="button">Descanso largo</button>
+      </div>
+      <div class="row center">
+        <p>Total de pomodoros: <span id="total">0</span></p>
+      </div>
+    </section>
+  </main>
+  <audio src="resources/SD_ALERT_44.mp3"></audio>
+</body>
+<script>
+  // You can also require other files to run in this process
+  require('./renderer.js')
+</script>
+</html>
