@@ -1,4 +1,5 @@
 'use strict';
+const {ipcRenderer} = require('electron')
 const chronometer = require('./modules/chronometer');
 const notifier = require('node-notifier');
 const path = require('path');
@@ -41,6 +42,16 @@ var longBreak = () => {
     'icon':  path.join(__dirname, '/resources/clock-red.png')
   })
 }
+
+// ipcRenderer.on('Init-pomodoro', () => {
+//   let count_segundos = -1;
+//   let count_minutos = 25;
+//   chronometer.timer(count_minutos, count_segundos)
+//   notifier.notify({
+//     'title':'Pomodoro Timer',
+//     'message':'Pomodoro iniciado, tiempo: ' + count_minutos + 'min.',
+//     'icon':  path.join(__dirname, '/resources/clock-red.png')
+// })
 
 btn_start.addEventListener('click', initPomodoro)
 btn_stop.addEventListener('click', chronometer.stopTimer)
