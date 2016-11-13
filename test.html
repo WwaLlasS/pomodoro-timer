@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="resources/css/normalize.css">
+  <link rel="stylesheet" href="resources/css/framework.css">
+  <link rel="stylesheet" href="resources/css/style.css">
+</head>
+<body>
+  <main>
+    <section class="row pomodoro-count">
+      <span class="col sm-6">Pomodoro Indicator</span>
+      <div class="col sm-7">
+        Total de pomodoros: <span id="total">0</span>
+      </div>
+    </section>
+    <section class="row center text-big">
+      <span id="minutos">00</span>:<span id="segundos">00</span>
+    </section>
+  </main>
+  <audio src="resources/SD_ALERT_44.mp3"></audio>
+</body>
+<script type="text/javascript">
+  require('./renderer')
+</script>
+</html>

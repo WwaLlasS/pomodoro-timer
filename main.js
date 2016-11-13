@@ -5,61 +5,67 @@ const path = require('path');
 
 let mainWin
 let tray
+let todoWin
 
-var createMainWindow = () =>{
-    mainWin = new BrowserWindow({
+var createMainWindow = (screenWidth, screenHeight) =>{
+  mainWin = new BrowserWindow({
     width: 400,
-    height: 500,
+    height: 160,
     autoHideMenuBar:true,
-    backgroundColor:'#03A9F4',
     resizable:false,
-    center:true,
-    icon: path.join(__dirname, 'resources/pomodoro-counter-empty.png')
+    alwaysOnTop:true,
+    x: screenWidth - 410,
+    y: 40,
+    frame:false,
+    icon: path.join(__dirname, '/resources/pomodoro-counter-empty.png')
   })
-
-  //Dev tools chrome
-  mainWin.openDevTools()
-
-  //load Index.html in the Browser's Window
-  mainWin.loadURL(`file://${__dirname}/index.html`)
-
-  mainWin.on('closed', () => {
+  mainWin.loadURL(`file://${__dirname}/test.html`)
+  //event Handler
+  mainWin.on('close', (e) => {
     app.quit()
   })
 }
 
-app.on('ready', () => {
-  createMainWindow()
-
-  let todoWin = new BrowserWindow({
+var createTodoWindow = (screenWidth, screenHeight) => {
+  todoWin = new BrowserWindow({
     width:400,
-    height:500,
+    minHeight:500,
     resizable:false,
     show:false,
     backgroundColor:'#03A9F4',
     alwaysOnTop:true,
     frame:false,
-    x:960, y:0,
+    x:screenWidth - 410,
+    y:40,
     offscreen: true
   })
   todoWin.loadURL(`file://${__dirname}/todo.html`)
+}
+  //Dev tools chrome
+  // mainWin.openDevTools()
 
+app.on('ready', () => {
+  let {width, height} = electron.screen.getPrimaryDisplay().workAreaSize
+  createMainWindow(width, height)
+  createTodoWindow(width, height)
   //Create tray Menu
-
-  tray = new Tray(path.join(__dirname, 'resources/pomodoro-counter-empty.png'))
+  tray = new Tray(path.join(__dirname, '/resources/pomodoro-counter-empty.png'))
   const contextMenu = Menu.buildFromTemplate([
-    {label:'Iniciar pomodoro', click() { } },
+    {label:'Iniciar pomodoro', click() {mainWin.webContents.send('init-pomodoro')}},
+    {label:'Detener pomodoro', click() {mainWin.webContents.send('stop')} },
     {label:'Break', type:'separator'},
-    {label:'Descanso breve'},
-    {label:'Descanso prolongado'},
-    {label:'TO DO', type:'separator'},
-    {label:'Tareas a realizar', click() { todoWin.isVisible() ? todoWin.hide() : todoWin.show()}},
-    {label:'Recordatorios', type:'checkbox'}
+    {label:'Descanso breve',click() {mainWin.webContents.send('short-break')}},
+    {label:'Descanso prolongado', click() {mainWin.webContents.send('long-break')}},
+    {label:'to-do', type:'separator'},
+    {label:'Tareas a realizar', click() {todoWin.isVisible() ? todoWin.hide() : todoWin.show()}},
+    // {label:'Recordatorios', type:'checkbox'},
+    {label:'Division', type:'separator'},
+    {label:'Salir', click(){!app.quit()}}
   ])
 
   //Event Click Handler
   tray.on('click', () => {
-    mainWin.isVisible() ? mainWin.hide() : mainWin.show()
+    mainWin.isVisible() ? mainWin.hide() : mainWin.show();
   })
 
   tray.setContextMenu(contextMenu)
