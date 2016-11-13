@@ -3,11 +3,23 @@ const {ipcRenderer} = require('electron')
 const chronometer = require('./modules/chronometer');
 const notifier = require('node-notifier');
 const path = require('path');
+const {closeWin} = require('electron').remote.require('./main')
+const btn_close = document.getElementById('button-close')
 
-let isPomodoro
+let isPomodoro = false;
+
+var initPomodoro = () => {
+  let count_segundos = -1;
+  let count_minutos = 25;
+  chronometer.timer(count_minutos, count_segundos, !isPomodoro)
+  notifier.notify({
+    'title':'Pomodoro Timer',
+    'message':'Pomodoro iniciado, tiempo: ' + count_minutos + 'min.',
+    'icon':  path.join(__dirname, '/resources/clock-red.png')
+  })
+}
 
 var shortBreak = () => {
-  isPomodoro = false;
   let count_segundos = -1;
   let count_minutos = 5;
   chronometer.timer(count_minutos, count_segundos, isPomodoro)
@@ -19,7 +31,6 @@ var shortBreak = () => {
 }
 
 var longBreak = () => {
-  isPomodoro = false
   let count_segundos = -1;
   let count_minutos = 15;
   chronometer.timer(count_minutos, count_segundos, isPomodoro)
@@ -31,26 +42,9 @@ var longBreak = () => {
 }
 
 //Menssages from Main process
-ipcRenderer.on('init-pomodoro', (event) => {
-  isPomodoro = true
-  let count_segundos = -1;
-  let count_minutos = 25;
-  chronometer.timer(count_minutos, count_segundos, isPomodoro)
-  notifier.notify({
-    'title':'Pomodoro Timer',
-    'message':'Pomodoro iniciado, tiempo: ' + count_minutos + 'min.',
-    'icon':  path.join(__dirname, '/resources/clock-red.png')
-  })
-})
-
-ipcRenderer.on('short-break', (event) => {
-  shortBreak()
-})
-
-ipcRenderer.on('long-break', (event) => {
-  longBreak()
-})
-
-ipcRenderer.on('stop', (event) => {
-  chronometer.stopTimer()
-})
+ipcRenderer.on('init-pomodoro', initPomodoro)
+ipcRenderer.on('short-break', shortBreak)
+ipcRenderer.on('long-break', longBreak)
+ipcRenderer.on('stop', chronometer.stopTimer)
+//Listeners
+btn_close.addEventListener('click', ()=> closeWin('main'))

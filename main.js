@@ -19,7 +19,7 @@ var createMainWindow = (screenWidth, screenHeight) =>{
     frame:false,
     icon: path.join(__dirname, '/resources/pomodoro-counter-empty.png')
   })
-  mainWin.loadURL(`file://${__dirname}/test.html`)
+  mainWin.loadURL(`file://${__dirname}/index.html`)
   //event Handler
   mainWin.on('close', (e) => {
     app.quit()
@@ -89,3 +89,12 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+//Close Buttons
+exports.closeWin = function (win) {
+  if (win === 'todo') {
+    todoWin.hide()
+  }else if (win === 'main') {
+    mainWin.hide()
+  }
+};

@@ -5,17 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>TO DO</title>
+  <link rel="stylesheet" href="resources/css/css/font-awesome.min.css">
   <link rel="stylesheet" href="resources/css/normalize.css">
   <link rel="stylesheet" href="resources/css/framework.css">
   <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body class="container">
-  <div class="row">
-    <input class="col sm-12" maxlength="80" id="tarea" type="text" />
-    <button id="add-btn" class="button-green">Agregar tarea</button>
-    <button type="button" class="button-red" id="remove-task">Remover tarea</button>
+  <div class="row buttons">
+    <div>
+      <i id="button-add" class="fa fa-plus fa-lg" aria-hidden="true" title="Add Task"></i>
+      <i id="button-remove" class="fa fa-minus fa-lg" aria-hidden="true" title="Remove Task"></i>
+    </div>
+    <div class="">
+      <i id="button-close" class="fa fa-times fa-lg" aria-hidden="true" title="Hide Window"></i>
+    </div>
+  </div>
+  <div class="row input">
+    <input class="col sm-12" maxlength="80" id="tarea" type="text" placeholder="Enter a new task" />
   </div>
   <div id="task-container">
+    <!-- Contenedor para las tarea -->
   </div>
 </div>
 </body>

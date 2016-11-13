@@ -39,6 +39,7 @@ exports.timer = (minutos, segundos, isPomodoro) => {
         'message': 'El tiempo a finalizado',
         'icon': path.join(__dirname,'../resources/clock-red.png')
       });
+      return false
     }
   },1000)
 };
