@@ -4,57 +4,53 @@ const chronometer = require('./modules/chronometer');
 const notifier = require('node-notifier');
 const path = require('path');
 
-const btn_start = document.getElementById('start');
-const btn_stop = document.getElementById('stop')
-const btn_shortBreak = document.getElementById('short')
-const btn_longBreak = document.getElementById('long')
-
-var initPomodoro = () => {
-  let count_segundos = -1;
-  let count_minutos = document.getElementById('tiempo').value;
-  count_minutos = parseInt(count_minutos);
-  chronometer.timer(count_minutos, count_segundos)
-  notifier.notify({
-    'title':'Pomodoro Timer',
-    'message':'Pomodoro iniciado, tiempo: ' + count_minutos + 'min.',
-    'icon': path.join(__dirname, '/resources/clock-red.png')
-  })
-}
+let isPomodoro
 
 var shortBreak = () => {
+  isPomodoro = false;
   let count_segundos = -1;
   let count_minutos = 5;
-  chronometer.timer(count_minutos, count_segundos)
+  chronometer.timer(count_minutos, count_segundos, isPomodoro)
   notifier.notify({
     'title':'Pomodoro Timer',
-    'message':'Pomodoro iniciado, tiempo: ' + count_minutos + 'min.',
+    'message':'Short Break, tiempo: ' + count_minutos + 'min.',
     'icon':  path.join(__dirname, '/resources/clock-red.png')
   })
 }
 
 var longBreak = () => {
+  isPomodoro = false
   let count_segundos = -1;
   let count_minutos = 15;
-  chronometer.timer(count_minutos, count_segundos)
+  chronometer.timer(count_minutos, count_segundos, isPomodoro)
+  notifier.notify({
+    'title':'Pomodoro Timer',
+    'message':'Long Break, tiempo: ' + count_minutos + 'min.',
+    'icon':  path.join(__dirname, '/resources/clock-red.png')
+  })
+}
+
+//Menssages from Main process
+ipcRenderer.on('init-pomodoro', (event) => {
+  isPomodoro = true
+  let count_segundos = -1;
+  let count_minutos = 25;
+  chronometer.timer(count_minutos, count_segundos, isPomodoro)
   notifier.notify({
     'title':'Pomodoro Timer',
     'message':'Pomodoro iniciado, tiempo: ' + count_minutos + 'min.',
     'icon':  path.join(__dirname, '/resources/clock-red.png')
   })
-}
+})
 
-// ipcRenderer.on('Init-pomodoro', () => {
-//   let count_segundos = -1;
-//   let count_minutos = 25;
-//   chronometer.timer(count_minutos, count_segundos)
-//   notifier.notify({
-//     'title':'Pomodoro Timer',
-//     'message':'Pomodoro iniciado, tiempo: ' + count_minutos + 'min.',
-//     'icon':  path.join(__dirname, '/resources/clock-red.png')
-// })
+ipcRenderer.on('short-break', (event) => {
+  shortBreak()
+})
 
-btn_start.addEventListener('click', initPomodoro)
-btn_stop.addEventListener('click', chronometer.stopTimer)
+ipcRenderer.on('long-break', (event) => {
+  longBreak()
+})
 
-btn_shortBreak.addEventListener('click', shortBreak)
-btn_longBreak.addEventListener('click', longBreak)
+ipcRenderer.on('stop', (event) => {
+  chronometer.stopTimer()
+})

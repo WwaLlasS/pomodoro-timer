@@ -10,6 +10,16 @@
   <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body class="container">
-  <h1 id="title">Ventana de tareas del dia</h1>
+  <div class="row">
+    <input class="col sm-12" maxlength="80" id="tarea" type="text" />
+    <button id="add-btn" class="button-green">Agregar tarea</button>
+    <button type="button" class="button-red" id="remove-task">Remover tarea</button>
+  </div>
+  <div id="task-container">
+  </div>
+</div>
 </body>
+<script type="text/javascript">
+require('./to-do.js');
+</script>
 </html>
