@@ -17,16 +17,68 @@ body{
   color: #fff;
   text-shadow: 0px 0px 10px rgba(0, 0, 0,0.5);
   font-weight: bold;
+  justify-content: flex-end;
+}
+
+.row.close{
+  position: absolute;
+  color: #fff;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0,0.5);
+  margin: 0px 10px 0px 0px;
+  right: 0px;
+}
+
+.fa{transition: 0.3s;}
+
+.fa:active{
+  text-shadow:none !important;
+}
+
+.fa:hover{
+  color: lightgray !important;
+  text-shadow:none !important;
 }
 
 /* Todo window*/
 .task-box{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   margin-top: 10px;
   color: #fff;
   text-shadow: 0px 0px 10px rgba(0, 0, 0,0.5);
   font-weight: bold;
+
 }
 
-.row input[type=text]{
-  margin-bottom: 10px;
+#tarea{
+  color: white;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  box-shadow: none;
+  border-radius: 0px;
+  width: 50%;
+  text-align: center;
+  font-weight: bold;
+}
+
+#tarea:focus{
+  outline: none;
+  width: 90%;
+  border-bottom: 1.5px solid white;
+}
+
+.row.buttons{
+  justify-content: space-between;
+}
+
+.row.input, .row.buttons{
+  margin: 0px;
+}
+
+.row.buttons i{
+  margin: 10px;
+  color: white;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0,0.5);
 }

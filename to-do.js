@@ -1,13 +1,19 @@
 'use strict';
-const btn_add = document.getElementById('add-btn')
-const btn_remove = document.getElementById('remove-task')
 const container = document.getElementById('task-container')
-let count = 0
+const btn_add = document.getElementById('button-add')
+const btn_remove = document.getElementById('button-remove')
+const btn_close = document.getElementById('button-close')
+const {closeWin} = require('electron').remote.require('./main')
 
-btn_add.addEventListener('click', () => {
+let count = 0
+let tecla = []
+const KEY_ENTER = 13
+
+
+const addTask = () => {
   let task = document.getElementById('tarea')
   let div =  document.createElement('div')
-  let htmltags = '<input class="check" type="checkbox" /><span>'+ task.value +'</span>'
+  let htmltags = '&nbsp;<input class="check" type="checkbox" />&nbsp;<span>'+ task.value +'</span>'
   div.classList.add('task-box')
   div.innerHTML = htmltags
   if (count < 14 && task.value != '' ) {
@@ -15,9 +21,9 @@ btn_add.addEventListener('click', () => {
     container.appendChild(div)
   }
   (task.value.length != 0)? task.value = '':task.value;
-})
+}
 
-btn_remove.addEventListener('click', () => {
+const removeTask = () => {
   let checkbox = document.getElementsByClassName('check')
   let div = document.getElementsByClassName('task-box')
   for (var i = 0; i < checkbox.length; i++) {
@@ -28,4 +34,21 @@ btn_remove.addEventListener('click', () => {
     }
   }
   console.log('Removiste un elemento');
+}
+
+btn_add.addEventListener('click', addTask)
+
+btn_remove.addEventListener('click', removeTask )
+
+btn_close.addEventListener('click', ()=> closeWin('todo'))
+
+document.addEventListener('keydown', (e)=>{
+  tecla[e.keyCode] = true
+  if(tecla[KEY_ENTER]){
+    addTask()
+  }
+})
+
+document.addEventListener('keyup', (e)=> {
+  tecla[e.keyCode] = false
 })

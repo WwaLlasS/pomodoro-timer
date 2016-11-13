@@ -89,3 +89,12 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+//Close Buttons
+exports.closeWin = function (win) {
+  if (win === 'todo') {
+    todoWin.hide()
+  }else if (win === 'main') {
+    mainWin.hide()
+  }
+};
