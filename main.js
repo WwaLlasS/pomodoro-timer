@@ -19,7 +19,7 @@ var createMainWindow = (screenWidth, screenHeight) =>{
     frame:false,
     icon: path.join(__dirname, '/resources/pomodoro-counter-empty.png')
   })
-  mainWin.loadURL(`file://${__dirname}/test.html`)
+  mainWin.loadURL(`file://${__dirname}/index.html`)
   //event Handler
   mainWin.on('close', (e) => {
     app.quit()
